@@ -2,6 +2,11 @@ let isStarting = false;
 let isPaused = true;
 let isBot = true;
 
+let botLevel = 1;
+
+const playerScoreElement = document.getElementById('player-score');
+const computerScoreElement = document.getElementById('computer-score');
+
 const infoSection = document.querySelector('.info-section');
 const infoElement = document.getElementById('info');
 
@@ -65,6 +70,17 @@ function setBot() {
         botImage.src = 'images/icon-bot-on.png'
         botButton.style.backgroundColor = 'var(--info-color)';
     }
+}
+
+function setBotLevel() {
+    let playerScore = parseInt(playerScoreElement.textContent);
+    let computerScore = parseInt(computerScoreElement.textContent);
+    let goalDiference = Math.abs(playerScore - computerScore);
+
+    if (playerScore >= computerScore && goalDiference < 3) botLevel = 1;
+    else if (playerScore >= computerScore && goalDiference < 6) botLevel = 1.5;
+    else if (playerScore >= computerScore && (goalDiference < 9 || goalDiference > 9)) botLevel = 2;
+    else if (playerScore < computerScore) botLevel = 1.5;
 }
 
 async function goal(position) {

@@ -4,8 +4,6 @@ import Paddle from '/javascript/Paddle.js';
 const ball = new Ball(document.getElementById('ball'));
 const playerPaddle = new Paddle(document.getElementById('player-paddle'));
 const computerPaddle = new Paddle(document.getElementById('computer-paddle'));
-const playerScoreElement = document.getElementById('player-score');
-const computerScoreElement = document.getElementById('computer-score');
 
 let lastTime;
 let playerPositionY = playerPaddle.position;
@@ -17,7 +15,7 @@ function update(time) {
 
         if (!isPaused) {
             ball.update(delta, [playerPaddle.rect(), computerPaddle.rect()]);
-            if (isBot) computerPaddle.update(delta, ball.y);
+            if (isBot) computerPaddle.update(delta, ball.y, botLevel);
         }
 
         if (isLose()) handleLose();
@@ -47,6 +45,10 @@ function handleLose() {
 
     ball.reset();
     computerPaddle.reset();
+
+    setBotLevel();
+    console.log(botLevel);
+
     isPaused = true;
     waitToStart();
 }
